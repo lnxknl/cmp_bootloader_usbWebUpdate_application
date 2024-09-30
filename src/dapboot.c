@@ -31,13 +31,13 @@ static inline void __set_MSP(uint32_t topOfMainStack) {
     asm("msr msp, %0" : : "r" (topOfMainStack));
 }
 
-bool validate_application(void) {// @NOTE 
+bool validate_application(void) {
     return ((uint32_t)(APP_INITIAL_STACK) & 0x2FFE0000) == 0x20000000;
 }
 
 static void jump_to_application(void) __attribute__ ((noreturn));
 
-static void jump_to_application(void) {// @NOTE 
+static void jump_to_application(void) {
 
     /* Use the application's vector table */
     if (APP_RELOCATE_VECTORS)
@@ -55,7 +55,7 @@ static void jump_to_application(void) {// @NOTE
     while (1);
 }
 
-int main(void) {// @NOTE 
+int main(void) {
     /* Setup clocks */
     target_clock_setup();
 
@@ -78,10 +78,10 @@ int main(void) {// @NOTE
         target_post_setup();
 
         while (1) {
-            usbd_poll(usbd_dev);// @NOTE 
+            usbd_poll(usbd_dev);
         }
     } else {
-        jump_to_application();// @NOTE 
+        jump_to_application();
     }
     
     return 0;
